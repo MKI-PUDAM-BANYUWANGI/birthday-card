@@ -1,41 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import SceneOpening from '@/components/scenes/SceneOpening';
 import SceneFeeling from '@/components/scenes/SceneFeeling';
 import SceneMessage from '@/components/scenes/SceneMessage';
 import SceneCard from '@/components/scenes/SceneCard';
+import SceneVideo from '@/components/scenes/SceneVideo';
+import FloatingHearts from '@/components/FloatingHearts';
+import CursorTrail from '@/components/CursorTrail';
 
-type Scene = 'opening' | 'feeling' | 'message' | 'card';
+type AppScene = 'opening' | 'feeling' | 'message' | 'video' | 'card';
 
 const Index: React.FC = () => {
-  const [currentScene, setCurrentScene] = useState<Scene>('opening');
+  const [currentScene, setCurrentScene] = useState<AppScene>('opening');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  const goToScene = (scene: Scene) => {
+  const goToScene = (scene: AppScene) => {
     setIsTransitioning(true);
+
+    // Handle background music
+    if (audioRef.current) {
+      const isEnteringVideo = scene === 'video';
+      const isLeavingVideo = currentScene === 'video' && scene !== 'video';
+
+      if (isEnteringVideo) {
+        audioRef.current.pause();
+      } else if (isLeavingVideo) {
+        audioRef.current.play().catch((e) => console.log('Audio resume failed', e));
+      }
+    }
+
     setTimeout(() => {
       setCurrentScene(scene);
       setIsTransitioning(false);
     }, 300);
   };
 
+  const handleStart = () => {
+    if (audioRef.current) {
+      audioRef.current.play().catch((e) => console.log('Audio playback failed', e));
+    }
+    goToScene('feeling');
+  };
+
   return (
-    <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
-      {currentScene === 'opening' && (
-        <SceneOpening onNext={() => goToScene('feeling')} />
-      )}
-      
-      {currentScene === 'feeling' && (
-        <SceneFeeling onNext={() => goToScene('message')} />
-      )}
-      
-      {currentScene === 'message' && (
-        <SceneMessage onNext={() => goToScene('card')} />
-      )}
-      
-      {currentScene === 'card' && (
-        <SceneCard isVisible={true} />
-      )}
-    </div>
+    <>
+      <audio ref={audioRef} loop>
+        <source src="/music/Ed Sheeran - Perfect - LatinHype.mp3" type="audio/mpeg" />
+      </audio>
+
+      <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        {currentScene === 'opening' && (
+          <SceneOpening onNext={handleStart} />
+        )}
+
+        {currentScene === 'feeling' && (
+          <SceneFeeling onNext={() => goToScene('message')} />
+        )}
+
+        {currentScene === 'message' && (
+          <SceneMessage onNext={() => goToScene('video')} />
+        )}
+
+        {currentScene === 'video' && (
+          <SceneVideo onNext={() => goToScene('card')} />
+        )}
+
+        {currentScene === 'card' && (
+          <SceneCard isVisible={true} />
+        )}
+      </div>
+      <FloatingHearts />
+      <CursorTrail />
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Confetti from '@/components/Confetti';
+import TypewriterText from '@/components/TypewriterText';
 
 // ===== PERSONALISASI =====
 // Ganti nama dan pesan di bawah ini sesuai keinginan
@@ -8,7 +9,20 @@ const pesan = `Setiap hari bersamamu adalah hadiah terindah yang pernah aku teri
 
 Di hari spesialmu ini, aku berdoa semoga Tuhan selalu melindungimu, memberikanmu kesehatan, kebahagiaan, dan segala impianmu tercapai.
 
-Terima kasih sudah menjadi tempatku pulang, menjadi alasan aku tersenyum, dan menjadi separuh jiwaku.`;
+Terima kasih sudah menjadi tempatku pulang, menjadi alasan aku tersenyum, dan menjadi separuh jiwaku. Aku akan mencintaimu di setiap versi dirimu 💞`;
+
+const reasons = [
+  "Senyummu yang selalu menenangkan hatiku",
+  "Caramu tertawa yang membuatku ikut bahagia",
+  "Kesabaranmu menghadapi sifatku",
+  "Ketulusan hatimu kepada semua orang",
+  "Tatapan matamu yang teduh",
+  "Semangatmu yang tak pernah padam",
+  "Caramu peduli pada hal-hal kecil",
+  "Suaramu yang selalu aku rindukan",
+  "Kebaikanmu yang luar biasa",
+  "Karena kamu adalah rumah bagiku"
+];
 // ===========================
 
 interface SceneCardProps {
@@ -17,6 +31,10 @@ interface SceneCardProps {
 
 const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
   const [showConfetti, setShowConfetti] = useState(false);
+  const [currentReason, setCurrentReason] = useState<string>("");
+  const [isAnimateReason, setIsAnimateReason] = useState(false);
+  const [isPlayingReasons, setIsPlayingReasons] = useState(false);
+  const [isMessageComplete, setIsMessageComplete] = useState(false);
 
   useEffect(() => {
     if (isVisible) {
@@ -25,18 +43,49 @@ const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
     }
   }, [isVisible]);
 
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isPlayingReasons) {
+      const cycleReason = () => {
+        setIsAnimateReason(true);
+        setTimeout(() => {
+          setCurrentReason((prev) => {
+            let next;
+            do {
+              next = reasons[Math.floor(Math.random() * reasons.length)];
+            } while (next === prev && reasons.length > 1);
+            return next;
+          });
+          setIsAnimateReason(false);
+        }, 300);
+      };
+
+      cycleReason(); // Trigger immediately
+      interval = setInterval(cycleReason, 3000); // Change every 3 seconds for readability
+    }
+
+    return () => clearInterval(interval);
+  }, [isPlayingReasons]);
+
+  const handleShowReason = () => {
+    if (!isPlayingReasons) {
+      setIsPlayingReasons(true);
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-6 romantic-gradient relative overflow-hidden">
       <Confetti active={showConfetti} />
-      
+
       {/* Background glows */}
       <div className="absolute top-1/4 left-1/6 w-72 h-72 rounded-full bg-primary/15 blur-3xl" />
       <div className="absolute bottom-1/4 right-1/6 w-64 h-64 rounded-full bg-gold/10 blur-3xl" />
-      
+
       {/* The Card */}
-      <div 
+      <div
         className="relative z-10 w-full max-w-lg opacity-0 animate-flip-in"
         style={{ perspective: '1000px' }}
       >
@@ -55,7 +104,7 @@ const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
               <div className="w-8 h-0.5 bg-gradient-to-l from-transparent to-primary/40" />
             </div>
           </div>
-          
+
           {/* Title */}
           <h1 className="text-3xl md:text-4xl font-display italic text-center text-foreground mb-2">
             Selamat Ulang Tahun
@@ -63,35 +112,54 @@ const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
           <p className="text-2xl md:text-3xl font-display text-center text-primary mb-8">
             {nama} 💖
           </p>
-          
+
           {/* Decorative divider */}
           <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto mb-8" />
-          
+
           {/* Message */}
-          <div className="text-center mb-8">
-            <p className="text-base md:text-lg font-body text-foreground/90 leading-relaxed whitespace-pre-line">
-              {pesan}
-            </p>
+          <div className="text-center mb-8 min-h-[200px]">
+            <TypewriterText
+              text={pesan}
+              delay={1000}
+              speed={30}
+              className="text-base md:text-lg font-body text-foreground/90 leading-relaxed whitespace-pre-line"
+              onComplete={() => setIsMessageComplete(true)}
+            />
           </div>
-          
+
           {/* Decorative divider */}
           <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto mb-8" />
-          
+
           {/* Closing */}
           <p className="text-xl md:text-2xl font-display italic text-center text-foreground">
-            Aku mencintaimu,
+            I Love U
           </p>
           <p className="text-lg md:text-xl font-display italic text-center text-muted-foreground mt-2">
-            hari ini, besok, dan seterusnya 🤍
+            Today, tomorrow, dan forever 🤍
           </p>
-          
+
+          {/* Interactive Reason */}
+          <div className={`mt-12 text-center transition-opacity duration-1000 ${isMessageComplete ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <button
+              onClick={handleShowReason}
+              className="text-sm font-body text-primary/80 hover:text-primary transition-colors underline decoration-dotted mb-4"
+            >
+              Why i so love u? (Click Me)
+            </button>
+            <div className={`h-8 transition-opacity duration-300 ${isAnimateReason ? 'opacity-0' : 'opacity-100'}`}>
+              <p className="text-lg font-display italic text-rose-deep">
+                {currentReason}
+              </p>
+            </div>
+          </div>
+
           {/* Footer hearts */}
           <div className="flex justify-center gap-4 mt-8">
             {[...Array(5)].map((_, i) => (
               <svg
                 key={i}
                 className="w-4 h-4 text-primary/60"
-                style={{ 
+                style={{
                   animationDelay: `${i * 200}ms`,
                   animation: 'pulse-soft 2s ease-in-out infinite'
                 }}
@@ -103,11 +171,11 @@ const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
             ))}
           </div>
         </div>
-        
+
         {/* Card shadow glow */}
         <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-rose-soft/20 to-primary/10 rounded-3xl blur-2xl -z-10" />
       </div>
-      
+
       {/* Bottom decoration */}
       <p className="text-sm font-body text-muted-foreground mt-10 opacity-0 animate-fade-in-slow delay-1000">
         Dibuat dengan 💕 untukmu

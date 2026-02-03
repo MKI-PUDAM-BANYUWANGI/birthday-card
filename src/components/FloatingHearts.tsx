@@ -4,13 +4,14 @@ interface FloatingHeartsProps {
   count?: number;
 }
 
-const FloatingHearts: React.FC<FloatingHeartsProps> = ({ count = 15 }) => {
+const FloatingHearts: React.FC<FloatingHeartsProps> = ({ count = 30 }) => {
   const hearts = Array.from({ length: count }, (_, i) => {
-    const delay = Math.random() * 8;
-    const duration = 6 + Math.random() * 4;
+    // Negative delay ensures hearts are already floating all over screen on load
+    const delay = -(Math.random() * 20);
+    const duration = 15 + Math.random() * 10; // Slower, more floating feel
     const left = Math.random() * 100;
-    const size = 12 + Math.random() * 20;
-    const opacity = 0.3 + Math.random() * 0.4;
+    const size = 15 + Math.random() * 25; // Slightly larger variation
+    const opacity = 0.2 + Math.random() * 0.3; // More subtle transparency
 
     return (
       <div
