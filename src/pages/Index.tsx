@@ -37,15 +37,26 @@ const Index: React.FC = () => {
 
   const handleStart = () => {
     if (audioRef.current) {
-      audioRef.current.play().catch((e) => console.log('Audio playback failed', e));
+      // Reset audio to beginning and ensure it's ready
+      audioRef.current.currentTime = 0;
+      audioRef.current.volume = 0.5;
+      
+      // Play must be called synchronously from user gesture
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => console.log('Audio playing successfully'))
+          .catch((e) => console.log('Audio playback failed', e));
+      }
     }
     goToScene('feeling');
   };
 
   return (
     <>
-      <audio ref={audioRef} loop>
+      <audio ref={audioRef} loop preload="auto">
         <source src="/music/Ed Sheeran - Perfect - LatinHype.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
       </audio>
 
       <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
