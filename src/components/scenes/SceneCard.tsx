@@ -1,0 +1,119 @@
+import React, { useState, useEffect } from 'react';
+import Confetti from '@/components/Confetti';
+
+// ===== PERSONALISASI =====
+// Ganti nama dan pesan di bawah ini sesuai keinginan
+const nama = "Sayangku";
+const pesan = `Setiap hari bersamamu adalah hadiah terindah yang pernah aku terima. Kamu mengajarkanku arti cinta yang tulus, sabar, dan penuh pengertian.
+
+Di hari spesialmu ini, aku berdoa semoga Tuhan selalu melindungimu, memberikanmu kesehatan, kebahagiaan, dan segala impianmu tercapai.
+
+Terima kasih sudah menjadi tempatku pulang, menjadi alasan aku tersenyum, dan menjadi separuh jiwaku.`;
+// ===========================
+
+interface SceneCardProps {
+  isVisible: boolean;
+}
+
+const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => setShowConfetti(true), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible]);
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-6 romantic-gradient relative overflow-hidden">
+      <Confetti active={showConfetti} />
+      
+      {/* Background glows */}
+      <div className="absolute top-1/4 left-1/6 w-72 h-72 rounded-full bg-primary/15 blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/6 w-64 h-64 rounded-full bg-gold/10 blur-3xl" />
+      
+      {/* The Card */}
+      <div 
+        className="relative z-10 w-full max-w-lg opacity-0 animate-flip-in"
+        style={{ perspective: '1000px' }}
+      >
+        <div className="card-gradient rounded-2xl shadow-card p-6 md:p-10 border border-rose-soft/50">
+          {/* Card header decoration */}
+          <div className="flex justify-center mb-6">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-0.5 bg-gradient-to-r from-transparent to-primary/40" />
+              <svg
+                className="w-8 h-8 text-primary animate-pulse-soft"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+              <div className="w-8 h-0.5 bg-gradient-to-l from-transparent to-primary/40" />
+            </div>
+          </div>
+          
+          {/* Title */}
+          <h1 className="text-3xl md:text-4xl font-display italic text-center text-foreground mb-2">
+            Selamat Ulang Tahun
+          </h1>
+          <p className="text-2xl md:text-3xl font-display text-center text-primary mb-8">
+            {nama} 💖
+          </p>
+          
+          {/* Decorative divider */}
+          <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto mb-8" />
+          
+          {/* Message */}
+          <div className="text-center mb-8">
+            <p className="text-base md:text-lg font-body text-foreground/90 leading-relaxed whitespace-pre-line">
+              {pesan}
+            </p>
+          </div>
+          
+          {/* Decorative divider */}
+          <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto mb-8" />
+          
+          {/* Closing */}
+          <p className="text-xl md:text-2xl font-display italic text-center text-foreground">
+            Aku mencintaimu,
+          </p>
+          <p className="text-lg md:text-xl font-display italic text-center text-muted-foreground mt-2">
+            hari ini, besok, dan seterusnya 🤍
+          </p>
+          
+          {/* Footer hearts */}
+          <div className="flex justify-center gap-4 mt-8">
+            {[...Array(5)].map((_, i) => (
+              <svg
+                key={i}
+                className="w-4 h-4 text-primary/60"
+                style={{ 
+                  animationDelay: `${i * 200}ms`,
+                  animation: 'pulse-soft 2s ease-in-out infinite'
+                }}
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            ))}
+          </div>
+        </div>
+        
+        {/* Card shadow glow */}
+        <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-rose-soft/20 to-primary/10 rounded-3xl blur-2xl -z-10" />
+      </div>
+      
+      {/* Bottom decoration */}
+      <p className="text-sm font-body text-muted-foreground mt-10 opacity-0 animate-fade-in-slow delay-1000">
+        Dibuat dengan 💕 untukmu
+      </p>
+    </div>
+  );
+};
+
+export default SceneCard;
