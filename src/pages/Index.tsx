@@ -1,12 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React, { useState } from 'react';
+import SceneOpening from '@/components/scenes/SceneOpening';
+import SceneFeeling from '@/components/scenes/SceneFeeling';
+import SceneMessage from '@/components/scenes/SceneMessage';
+import SceneCard from '@/components/scenes/SceneCard';
 
-const Index = () => {
+type Scene = 'opening' | 'feeling' | 'message' | 'card';
+
+const Index: React.FC = () => {
+  const [currentScene, setCurrentScene] = useState<Scene>('opening');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const goToScene = (scene: Scene) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentScene(scene);
+      setIsTransitioning(false);
+    }, 300);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+      {currentScene === 'opening' && (
+        <SceneOpening onNext={() => goToScene('feeling')} />
+      )}
+      
+      {currentScene === 'feeling' && (
+        <SceneFeeling onNext={() => goToScene('message')} />
+      )}
+      
+      {currentScene === 'message' && (
+        <SceneMessage onNext={() => goToScene('card')} />
+      )}
+      
+      {currentScene === 'card' && (
+        <SceneCard isVisible={true} />
+      )}
     </div>
   );
 };
