@@ -41,7 +41,7 @@ const SceneVideo: React.FC<SceneVideoProps> = ({ onNext }) => {
                         onPause={() => setIsPlaying(false)}
                     >
                         {/* User needs to add their video file to public/ and update this src */}
-                        <source src="/video/birthday-gurl.mp4" type="video/mp4" />
+                        <source src="/video/birthday-gurl.MOV" type="video/mp4" />
                         Browser kamu tidak mendukung pemutaran video.
                     </video>
                 </div>
