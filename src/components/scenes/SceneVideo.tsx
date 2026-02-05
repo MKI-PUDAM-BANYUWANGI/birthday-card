@@ -29,7 +29,7 @@ const SceneVideo: React.FC<SceneVideoProps> = ({ onNext }) => {
 
             <div className="z-10 w-full max-w-4xl flex flex-col items-center animate-fade-up">
                 <h2 className="text-2xl md:text-3xl font-display text-foreground mb-8 text-center">
-                    Sebuah kenangan untukmu... 🎥
+                    All moment with you is SPECIAL... 🎥
                 </h2>
 
                 <div className="relative w-full max-w-sm aspect-[9/16] bg-black/10 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/50 mb-8 group mx-auto">
@@ -53,7 +53,7 @@ const SceneVideo: React.FC<SceneVideoProps> = ({ onNext }) => {
                         onClick={onNext}
                         className="min-w-[150px]"
                     >
-                        Buka hatiku 💌
+                        Do you want to open my heart? 💌
                     </Button>
                 </div>
             </div>

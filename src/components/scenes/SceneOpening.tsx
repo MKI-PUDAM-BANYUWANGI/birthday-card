@@ -17,11 +17,11 @@ const SceneOpening: React.FC<SceneOpeningProps> = ({ onNext }) => {
 
       <div className="text-center z-10 max-w-md">
         <p className="text-4xl md:text-5xl font-display italic text-foreground opacity-0 animate-fade-up mb-4">
-          Hai sayang… 💕
+          Hai Sayang 💕
         </p>
 
         <p className="text-xl md:text-2xl font-body text-muted-foreground opacity-0 animate-fade-up delay-700 mb-12">
-          Aku punya sesuatu yang spesial buatmu nih..
+          I have a little surprise for you on your special day..
         </p>
 
         <div className="opacity-0 animate-fade-up delay-1500">
@@ -31,7 +31,7 @@ const SceneOpening: React.FC<SceneOpeningProps> = ({ onNext }) => {
             onClick={onNext}
             className="animate-pulse-soft"
           >
-            Sentuh layar 💫
+            Touch this 💫
           </Button>
         </div>
       </div>

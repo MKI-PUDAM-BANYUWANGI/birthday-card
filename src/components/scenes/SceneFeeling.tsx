@@ -18,15 +18,15 @@ const SceneFeeling: React.FC<SceneFeelingProps> = ({ onNext }) => {
       <div className="text-center z-10 max-w-lg">
         <div className="mb-8">
           <p className="text-3xl md:text-4xl font-display italic text-foreground opacity-0 animate-fade-up mb-6">
-            Di hari ini…
+            Wuhuuu…
           </p>
 
           <p className="text-2xl md:text-3xl font-display text-foreground opacity-0 animate-fade-up delay-700">
-            orang paling aku sayang
+            the most special person in my life
           </p>
 
           <p className="text-2xl md:text-3xl font-display text-foreground opacity-0 animate-fade-up delay-1000 mt-2">
-            bertambah usianya 🎂
+            is getting older TODAY! 🎂
           </p>
         </div>
 
@@ -47,7 +47,7 @@ const SceneFeeling: React.FC<SceneFeelingProps> = ({ onNext }) => {
             size="xl"
             onClick={onNext}
           >
-            Lanjut 💗
+            Next? 💗
           </Button>
         </div>
       </div>

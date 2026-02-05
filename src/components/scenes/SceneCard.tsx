@@ -5,20 +5,26 @@ import TypewriterText from '@/components/TypewriterText';
 // ===== PERSONALISASI =====
 // Ganti nama dan pesan di bawah ini sesuai keinginan
 const nama = "Sayangku";
-const pesan = `Setiap hari bersamamu adalah hadiah terindah yang pernah aku terima. Kamu mengajarkanku arti cinta yang tulus, sabar, dan penuh pengertian.
+const pesan = `Setiap hari bersamamu adalah hadiah terindah yang pernah aku terima. Kamu mengajarkanku banyak hal tentang arti cinta yang tulus, sabar, dan perjuangan untuk meraih kebahagiaan.
 
-Di hari spesialmu ini, aku berdoa semoga Tuhan selalu melindungimu, memberikanmu kesehatan, kebahagiaan, dan segala impianmu tercapai.
+Di hari spesialmu ini, aku berdoa semoga Tuhan selalu melindungimu, memberikanmu kesehatan, kebahagiaan, dan segala impianmu yang tertunda dapat tercapai.
 
-Terima kasih sudah menjadi tempatku pulang, menjadi alasan aku tersenyum, dan menjadi separuh jiwaku. Aku akan mencintaimu di setiap versi dirimu 💞`;
+Terima kasih sudah menjadi alasan aku untuk tersenyum, dan rumah tempatku pulang. Terimakasih atas setiap usaha yang kamu berikan untuk aku. Terimaksih telah mencintaiku sampai saat ini.
+
+Seberapapun jauhnya jarak kita, momen-momen yang membuat kita saling tidak mengerti, salah paham yang membuat kita saling menyakiti, diam yang membuat kita saling merindukan, dimanapun kamu berada aku akan selalu ada untukmu.
+
+I love u and I will always love you in every version of you 💞. 
+
+Happy Birthday My Gorgeous Gurl 🤍`;
 
 const reasons = [
   "Senyummu yang selalu menenangkan hatiku",
   "Caramu tertawa yang membuatku ikut bahagia",
   "Kesabaranmu menghadapi sifatku",
-  "Ketulusan hatimu kepada semua orang",
-  "Tatapan matamu yang teduh",
-  "Semangatmu yang tak pernah padam",
-  "Caramu peduli pada hal-hal kecil",
+  "Ketulusan hatimu kepada semua orang bahkan yang menyakitimu",
+  "Tatapan matamu yang teduh dan tenang",
+  "Semangatmu yang tak pernah padam dan terus berjuang",
+  "Caramu peduli pada hal-hal kecil tentang diriku",
   "Suaramu yang selalu aku rindukan",
   "Kebaikanmu yang luar biasa",
   "Karena kamu adalah rumah bagiku"
@@ -27,9 +33,10 @@ const reasons = [
 
 interface SceneCardProps {
   isVisible: boolean;
+  onNext?: () => void;
 }
 
-const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
+const SceneCard: React.FC<SceneCardProps> = ({ isVisible, onNext }) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [currentReason, setCurrentReason] = useState<string>("");
   const [isAnimateReason, setIsAnimateReason] = useState(false);
@@ -107,10 +114,10 @@ const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
 
           {/* Title */}
           <h1 className="text-3xl md:text-4xl font-display italic text-center text-foreground mb-2">
-            Selamat Ulang Tahun
+            Happy Birthday
           </h1>
           <p className="text-2xl md:text-3xl font-display text-center text-primary mb-8">
-            {nama} 💖
+            {nama} 🤍
           </p>
 
           {/* Decorative divider */}
@@ -152,6 +159,18 @@ const SceneCard: React.FC<SceneCardProps> = ({ isVisible }) => {
               </p>
             </div>
           </div>
+
+          {/* Special Surprise Button */}
+          {onNext && (
+            <div className={`mt-8 text-center transition-opacity duration-1000 delay-500 ${isMessageComplete ? 'opacity-100' : 'opacity-0'}`}>
+              <button
+                onClick={onNext}
+                className="px-6 py-2 bg-gradient-to-r from-purple-400 to-pink-400 hover:from-purple-500 hover:to-pink-500 text-white rounded-full font-display shadow-lg transform hover:scale-105 transition-all duration-300 animate-pulse-soft"
+              >
+                Special Surprise on Here! 🎁
+              </button>
+            </div>
+          )}
 
           {/* Footer hearts */}
           <div className="flex justify-center gap-4 mt-8">

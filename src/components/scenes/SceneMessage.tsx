@@ -21,11 +21,11 @@ const SceneMessage: React.FC<SceneMessageProps> = ({ onNext }) => {
       <div className="text-center z-10 max-w-md">
         <div className="mb-10">
           <p className="text-2xl md:text-3xl font-display italic text-foreground opacity-0 animate-fade-up leading-relaxed">
-            Terima kasih sudah selalu ada
+            Ciee, udah 22 tahun aja nih yaa..
           </p>
 
           <p className="text-2xl md:text-3xl font-display italic text-foreground opacity-0 animate-fade-up delay-700 leading-relaxed mt-4">
-            di setiap senyum dan lelahku 🤍
+            Terima kasih ya sayang, sudah selalu ada di setiap senyum dan lelahku 🤍
           </p>
         </div>
 
@@ -36,20 +36,20 @@ const SceneMessage: React.FC<SceneMessageProps> = ({ onNext }) => {
 
         <div className="h-8 mb-10">
           <TypewriterText
-            text="Kamu adalah alasan aku tersenyum setiap hari"
-            delay={2000}
+            text="Kamu adalah alasan aku bahagia dan tersenyum setiap hari 💞"
+            delay={1000}
             speed={50}
             className="text-lg font-body text-muted-foreground"
           />
         </div>
 
-        <div className="opacity-0 animate-fade-up delay-1500">
+        <div className="opacity-0 animate-fade-up delay-1500 mt-10">
           <Button
             variant="intimate"
             size="xl"
             onClick={onNext}
           >
-            Lanjut 💗
+            Wanna Next Again? 💗
           </Button>
         </div>
       </div>

@@ -2,12 +2,14 @@ import React, { useState, useRef } from 'react';
 import SceneOpening from '@/components/scenes/SceneOpening';
 import SceneFeeling from '@/components/scenes/SceneFeeling';
 import SceneMessage from '@/components/scenes/SceneMessage';
+import ScenePhotos from '@/components/scenes/ScenePhotos';
 import SceneCard from '@/components/scenes/SceneCard';
 import SceneVideo from '@/components/scenes/SceneVideo';
+import SceneSpecial from '@/components/scenes/SceneSpecial';
 import FloatingHearts from '@/components/FloatingHearts';
 import CursorTrail from '@/components/CursorTrail';
 
-type AppScene = 'opening' | 'feeling' | 'message' | 'video' | 'card';
+type AppScene = 'opening' | 'feeling' | 'message' | 'photos' | 'video' | 'card' | 'special';
 
 const Index: React.FC = () => {
   const [currentScene, setCurrentScene] = useState<AppScene>('opening');
@@ -32,6 +34,7 @@ const Index: React.FC = () => {
     setTimeout(() => {
       setCurrentScene(scene);
       setIsTransitioning(false);
+      window.scrollTo(0, 0);
     }, 300);
   };
 
@@ -40,7 +43,7 @@ const Index: React.FC = () => {
       // Reset audio to beginning and ensure it's ready
       audioRef.current.currentTime = 0;
       audioRef.current.volume = 0.5;
-      
+
       // Play must be called synchronously from user gesture
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
@@ -69,7 +72,11 @@ const Index: React.FC = () => {
         )}
 
         {currentScene === 'message' && (
-          <SceneMessage onNext={() => goToScene('video')} />
+          <SceneMessage onNext={() => goToScene('photos')} />
+        )}
+
+        {currentScene === 'photos' && (
+          <ScenePhotos onNext={() => goToScene('video')} />
         )}
 
         {currentScene === 'video' && (
@@ -77,7 +84,11 @@ const Index: React.FC = () => {
         )}
 
         {currentScene === 'card' && (
-          <SceneCard isVisible={true} />
+          <SceneCard isVisible={true} onNext={() => goToScene('special')} />
+        )}
+
+        {currentScene === 'special' && (
+          <SceneSpecial />
         )}
       </div>
       <FloatingHearts />
